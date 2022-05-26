@@ -13,14 +13,14 @@ class Form extends React.Component {
         <Input type="text" title="Имя" hint="Anna" />
         <Input type="text" title="Фамилия" hint="Ivanova" />
         <Input type="date" title="Дата рождения" />
-        <Input type="text" title="Телефон" hint="+7 999 999 99 99" />
+        <Input type="tel" title="Телефон" hint="+7 999 999 99 99" />
         <Input type="text" title="Сайт" hint="address@example.ru" />
         <TextArea title="О себе" />
         <TextArea title="Стек технологий" />
         <TextArea title="Описание последнего проекта" />
         <div className="buttons">
-          <Button text="Сохранить" class="success"/>
-          <Button text="Отмена" class="cancel"/>
+          <Button text="Сохранить" class="success" />
+          <Button text="Отмена" class="cancel" />
         </div>
       </div>
     );
