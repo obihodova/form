@@ -1,0 +1,32 @@
+label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 573px;
+  height: 50px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(173, 173, 173, 1);
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+::placeholder {
+  color: rgba(102, 102, 102, 1);
+  font-size: 12px;
+}
+
+::-webkit-datetime-edit-year-field {
+  color: rgba(102, 102, 102, 1);
+}
+::-webkit-datetime-edit-month-field {
+  color: rgba(102, 102, 102, 1);
+}
+::-webkit-datetime-edit-day-field {
+  color: rgba(102, 102, 102, 1);
+}
+
+
