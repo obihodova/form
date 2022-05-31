@@ -1,0 +1,24 @@
+h1 {
+  color: black;
+  font-size: 47px;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 681px;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  border-radius: 40px;
+  border-width: 2px;
+  border-color: black;
+  background-color: white;
+  padding: 54px;
+  box-sizing: border-box;
+}
+
+.userInfo {
+  width: 100%;
+}

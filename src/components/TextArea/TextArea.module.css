@@ -9,11 +9,31 @@ label {
 
 textarea {
   width: 573px;
-  margin-bottom: 20px;
   border-radius: 6px;
   border: 1px solid rgba(173, 173, 173, 1);
   padding-left: 10px;
   padding: 10px;
   box-sizing: border-box;
   resize: none;
+}
+
+.textareaForm {
+  margin-bottom: 20px;
+}
+
+
+.counter {
+  font-size: 12px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+
+.test {
+  background: red;
 }
