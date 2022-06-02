@@ -107,7 +107,7 @@ class Form extends React.Component {
       isOk = false;
     }
 
-    if (!/^\d{}-?\d{4}-?\d{2}-?\d{2}$/.test(this.state.phone)) {
+    if (!/^\d{1}-?\d{4}-?\d{2}-?\d{2}$/.test(this.state.phone)) {
       errors.phone =
         "Неправильный формат. Пожалуйста, введите номер в формате 7-7777-77-77";
       isOk = false;
