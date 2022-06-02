@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../Button";
 import Input from "../Input";
 import TextArea from "../TextArea";
+import { useState } from "react";
 
 import styles from "./Form.module.css";
 
@@ -22,18 +23,11 @@ const DEFAULT_STATE = {
   isFormValid: false,
 };
 
-class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...DEFAULT_STATE,
-    };
-    this.handleFormInput = this.handleFormInput.bind(this);
-    this.handleSubmitForm = this.handleSubmitForm.bind(this);
-    this.handleCancelForm = this.handleCancelForm.bind(this);
-  }
+function Form () {
+  const [state, setState] = useState({...DEFAULT_STATE});
+   
 
-  handleFormInput(e) {
+  const handleFormInput = (e) => {
     if (
       e.target.name === "phone" &&
       e.target.value &&
@@ -43,129 +37,126 @@ class Form extends React.Component {
     }
 
     if (e.target.tagName === "TEXTAREA" && e.target.value.length > 600) {
-      this.setState({
-        errors: {
-          [e.target.name]: "Привышен лимит символов",
-        },
-      });
+      setState(state => ({ ...state, errors: {
+        [e.target.name]: "Привышен лимит символов", }}));
     } else if (e.target.value.length < 600) {
-      this.setState({
+      setState(state => ({ ...state,
         errors: {
           [e.target.name]: "",
         },
-      });
+      }));
     }
 
-    this.setState({ [e.target.name]: e.target.value });
+    setState(state => ({ ...state, [e.target.name]: e.target.value }));
   }
 
-  handleCancelForm() {
-    this.setState({
+  const handleCancelForm = () => {
+    setState({
       ...DEFAULT_STATE,
     });
   }
 
-  handleSubmitForm() {
+  const handleSubmitForm = () => {
     let errors = {
       ...DEFAULT_FORM,
-      ...this.state.errors,
+      ...state.errors,
     };
 
     let isOk = true;
 
     // проверка имени
-    if (!/[A-ZА-Я]/.test(this.state.firstName.trim().charAt(0))) {
+    if (!/[A-ZА-Я]/.test(state.firstName.trim().charAt(0))) {
       errors.firstName = "Первая буква должна быть заглавной";
       isOk = false;
     }
 
-    if (this.state.firstName.trim().length === 0) {
+    if (state.firstName.trim().length === 0) {
       errors.firstName = "Поле пустое. Заполните пожалуйста";
       isOk = false;
     }
 
     // проверка фамилии
-    if (!/[A-ZА-Я]/.test(this.state.secondName.trim().charAt(0))) {
+    if (!/[A-ZА-Я]/.test(state.secondName.trim().charAt(0))) {
       errors.secondName = "Первая буква должна быть заглавной";
       isOk = false;
     }
 
-    if (this.state.secondName.trim().length === 0) {
+    if (state.secondName.trim().length === 0) {
       errors.secondName = "Поле пустое. Заполните пожалуйста";
       isOk = false;
     }
 
     // проверка даты
-    if (this.state.date.trim().length === 0) {
+    if (state.date.trim().length === 0) {
       errors.date = "Поле пустое. Заполните пожалуйста";
       isOk = false;
     }
 
     // проверка телефона
-    if (this.state.phone.trim().length === 0) {
+    if (state.phone.trim().length === 0) {
       errors.phone = "Поле пустое. Заполните пожалуйста";
       isOk = false;
     }
 
-    if (!/^\d{}-?\d{4}-?\d{2}-?\d{2}$/.test(this.state.phone)) {
+    if (!/^\d{1}-?\d{4}-?\d{2}-?\d{2}$/.test(state.phone)) {
       errors.phone =
         "Неправильный формат. Пожалуйста, введите номер в формате 7-7777-77-77";
       isOk = false;
     }
 
     // проверка сайта
-    if (this.state.web.trim().indexOf("https://") !== 0) {
+    if (state.web.trim().indexOf("https://") !== 0) {
       errors.web = "Сайт должен начинаться с https://";
       isOk = false;
     }
 
-    if (this.state.web.trim().length === 0) {
+    if (state.web.trim().length === 0) {
       errors.web = "Поле пустое. Заполните пожалуйста";
       isOk = false;
     }
 
     // проверка поля "О себе"
-    if (this.state.about.trim().length === 0) {
+    if (state.about.trim().length === 0) {
       errors.about = "Поле пустое. Заполните пожалуйста";
       isOk = false;
     }
 
     // проверка поля "Стек технологий"
-    if (this.state.technology.trim().length === 0) {
+    if (state.technology.trim().length === 0) {
       errors.technology = "Поле пустое. Заполните пожалуйста";
       isOk = false;
     }
 
     // проверка поля "Последний проект"
-    if (this.state.projectInfo.trim().length === 0) {
+    if (state.projectInfo.trim().length === 0) {
       errors.projectInfo = "Поле пустое. Заполните пожалуйста";
       isOk = false;
     }
 
-    this.setState({ errors });
+    setState(state => ({...state,  errors }));
 
     if (isOk) {
-      this.setState({ isFormValid: true });
+      setState( state => ({...state, isFormValid: true }));
     }
   }
 
-  render() {
-    if (this.state.isFormValid) {
+    if (state.isFormValid) {
       return (
         <div className={styles.form}>
-          <h1>{`${this.state.firstName} ${this.state.secondName}`}</h1>
+          <h1>{`${state.firstName} ${state.secondName}`}</h1>
           <div className={styles.userInfo}>
-            <p>{`Дата рождения: ${this.state.date}`}</p>
-            <p>{`Телефон: ${this.state.phone}`}</p>
-            <p>{`Сайт: ${this.state.web}`}</p>
-            <p>{`О себе: ${this.state.about}`}</p>
-            <p>{`Стек технологий: ${this.state.technology}`}</p>
-            <p>{`Сайт: ${this.state.web}`}</p>
-            <p>{`Описание последнего проекта: ${this.state.projectInfo}`}</p>
+            <p>{`Дата рождения: ${state.date}`}</p>
+            <p>{`Телефон: ${state.phone}`}</p>
+            <p>{`Сайт: ${state.web}`}</p>
+            <p>{`О себе: ${state.about}`}</p>
+            <p>{`Стек технологий: ${state.technology}`}</p>
+            <p>{`Сайт: ${state.web}`}</p>
+            <p>{`Описание последнего проекта: ${state.projectInfo}`}</p>
           </div>
         </div>
       );
     }
+    
     return (
       <div className={styles.form}>
         <h1>Создание анкеты</h1>
@@ -174,82 +165,82 @@ class Form extends React.Component {
           title="Имя"
           name="firstName"
           hint="Anna"
-          value={this.state.firstName}
-          onChange={this.handleFormInput}
-          error={this.state.errors.firstName}
+          value={state.firstName}
+          onChange={handleFormInput}
+          error={state.errors.firstName}
         />
         <Input
           type="text"
           title="Фамилия"
           hint="Ivanova"
           name="secondName"
-          value={this.state.secondName}
-          onChange={this.handleFormInput}
-          error={this.state.errors.secondName}
+          value={state.secondName}
+          onChange={handleFormInput}
+          error={state.errors.secondName}
         />
         <Input
           type="date"
           title="Дата рождения"
           name="date"
-          value={this.state.date}
-          onChange={this.handleFormInput}
-          error={this.state.errors.date}
+          value={state.date}
+          onChange={handleFormInput}
+          error={state.errors.date}
         />
         <Input
           type="tel"
           title="Телефон"
           hint="7-7777-77-77"
           name="phone"
-          value={this.state.phone}
-          onChange={this.handleFormInput}
+          value={state.phone}
+          onChange={handleFormInput}
           maxLength={12}
-          error={this.state.errors.phone}
+          error={state.errors.phone}
         />
         <Input
           type="text"
           title="Сайт"
           hint="https://example.ru"
           name="web"
-          value={this.state.web}
-          onChange={this.handleFormInput}
-          error={this.state.errors.web}
+          value={state.web}
+          onChange={handleFormInput}
+          error={state.errors.web}
         />
         <TextArea
           title="О себе"
           name="about"
-          value={this.state.about}
-          onChange={this.handleFormInput}
-          error={this.state.errors.about}
+          value={state.about}
+          onChange={handleFormInput}
+          error={state.errors.about}
         />
         <TextArea
           title="Стек технологий"
           name="technology"
-          value={this.state.technology}
-          onChange={this.handleFormInput}
-          error={this.state.errors.technology}
+          value={state.technology}
+          onChange={handleFormInput}
+          error={state.errors.technology}
         />
         <TextArea
           title="Описание последнего проекта"
           name="projectInfo"
-          value={this.state.projectInfo}
-          onChange={this.handleFormInput}
-          error={this.state.errors.projectInfo}
+          value={state.projectInfo}
+          onChange={handleFormInput}
+          error={state.errors.projectInfo}
         />
         <div className="buttons">
           <Button
             text="Сохранить"
             class="success"
-            onClick={this.handleSubmitForm}
+            onClick={handleSubmitForm}
           />
           <Button
             text="Отмена"
             class="cancel"
-            onClick={this.handleCancelForm}
+            onClick={handleCancelForm}
           />
         </div>
       </div>
     );
-  }
+  
 }
 
 export default Form;
